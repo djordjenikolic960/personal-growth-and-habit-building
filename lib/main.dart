@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'presentation/common/router/grow_daily_router.dart';
 import 'presentation/di/service_locator.dart' as presentation_service_locator;
+import 'presentation/themes/grow_daily_theme_data.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,11 +19,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      title: "Grow Daily",
+      theme: growDailyThemeData(),
       routerConfig:
           presentation_service_locator.get<GrowDailyRouter>().getRouter(),
     );
