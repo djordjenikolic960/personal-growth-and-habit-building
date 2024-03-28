@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'screen.dart';
 import '../../../common/constant/constant.dart';
 import '../../di/service_locator.dart';
 import '../../home/home_screen.dart';
@@ -8,6 +9,7 @@ import '../../challenges/challenges_screen.dart';
 import '../../progress/progress_screen.dart';
 import '../../settings/settings_screen.dart';
 import 'bloc/bottom_navigation_bloc.dart';
+import 'bloc/bottom_navigation_event.dart';
 import 'bloc/bottom_navigation_state.dart';
 
 class BottomNavigationScreen extends StatelessWidget {
@@ -24,39 +26,70 @@ class BottomNavigationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<BottomNavigationBloc>(
       create: (_) => serviceLocator.get<BottomNavigationBloc>(),
-      child: SafeArea(
-        child: Scaffold(
-          bottomNavigationBar: BottomNavigationBar(
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: Constant.emptyString,
+      child: BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
+          builder: (blocContext, state) {
+        final selectedScreenIndex =
+            (state as BottomNavigationSelectedScreen).screen.index;
+        return SafeArea(
+          child: Scaffold(
+            bottomNavigationBar: BottomNavigationBar(
+              backgroundColor: const Color(0xFFFFF5FA),
+              type: BottomNavigationBarType.shifting,
+              onTap: (index) {
+                blocContext.read<BottomNavigationBloc>().add(
+                      TabChanged(
+                        Screen.values[index],
+                      ),
+                    );
+              },
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              currentIndex: selectedScreenIndex,
+              selectedIconTheme: const IconThemeData(
+                color: Color(0xFFF65B4E),
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.add),
-                label: Constant.emptyString,
+              unselectedIconTheme: const IconThemeData(
+                color: Color(0xFFBDBDBD),
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle_outlined),
-                label: Constant.emptyString,
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: Constant.emptyString,
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.emoji_events),
+                  label: Constant.emptyString,
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.insights),
+                  label: Constant.emptyString,
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.settings),
+                  label: Constant.emptyString,
+                ),
+              ],
+            ),
+            body: SafeArea(
+              child: Stack(
+                children: [
+                  Container(
+                    color: const Color(0xFFFFF3E9),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Image.asset(
+                      'assets/images/background.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  _screens[selectedScreenIndex],
+                ],
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.settings),
-                label: Constant.emptyString,
-              ),
-            ],
+            ),
           ),
-          body: BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
-            builder: (_, state) {
-              if (state is BottomNavigationSelectedScreen) {
-                return _screens[state.screen.index];
-              } else {
-                return const SizedBox.shrink();
-              }
-            },
-          ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }
