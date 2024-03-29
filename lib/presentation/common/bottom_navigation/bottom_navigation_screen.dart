@@ -30,62 +30,60 @@ class BottomNavigationScreen extends StatelessWidget {
           builder: (blocContext, state) {
         final selectedScreenIndex =
             (state as BottomNavigationSelectedScreen).screen.index;
-        return SafeArea(
-          child: Scaffold(
-            bottomNavigationBar: BottomNavigationBar(
-              backgroundColor: const Color(0xFFFFF5FA),
-              type: BottomNavigationBarType.shifting,
-              onTap: (index) {
-                blocContext.read<BottomNavigationBloc>().add(
-                      TabChanged(
-                        Screen.values[index],
-                      ),
-                    );
-              },
-              showSelectedLabels: false,
-              showUnselectedLabels: false,
-              currentIndex: selectedScreenIndex,
-              selectedIconTheme: const IconThemeData(
-                color: Color(0xFFF65B4E),
-              ),
-              unselectedIconTheme: const IconThemeData(
-                color: Color(0xFFBDBDBD),
-              ),
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: Constant.emptyString,
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.emoji_events),
-                  label: Constant.emptyString,
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.insights),
-                  label: Constant.emptyString,
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.settings),
-                  label: Constant.emptyString,
-                ),
-              ],
-            ),
-            body: SafeArea(
-              child: Stack(
-                children: [
-                  Container(
-                    color: const Color(0xFFFFF3E9),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Image.asset(
-                      'assets/images/background.png',
-                      fit: BoxFit.cover,
+        return Scaffold(
+          bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: const Color(0xFFFFF5FA),
+            type: BottomNavigationBarType.shifting,
+            onTap: (index) {
+              blocContext.read<BottomNavigationBloc>().add(
+                    TabChanged(
+                      Screen.values[index],
                     ),
-                  ),
-                  _screens[selectedScreenIndex],
-                ],
+                  );
+            },
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            currentIndex: selectedScreenIndex,
+            selectedIconTheme: const IconThemeData(
+              color: Color(0xFFF65B4E),
+            ),
+            unselectedIconTheme: const IconThemeData(
+              color: Color(0xFFBDBDBD),
+            ),
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: Constant.emptyString,
               ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.emoji_events),
+                label: Constant.emptyString,
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.insights),
+                label: Constant.emptyString,
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: Constant.emptyString,
+              ),
+            ],
+          ),
+          body: SafeArea(
+            child: Stack(
+              children: [
+                Container(
+                  color: const Color(0xFFFFF3E9),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Image.asset(
+                    'assets/images/background.png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                _screens[selectedScreenIndex],
+              ],
             ),
           ),
         );
