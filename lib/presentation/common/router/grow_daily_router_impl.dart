@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import '../../choose_category/choose_category_screen.dart';
 import '../bottom_navigation/bottom_navigation_screen.dart';
 import 'grow_daily_router.dart';
 
@@ -15,6 +16,7 @@ class GrowDailyRouterImpl implements GrowDailyRouter {
 
   GrowDailyRouterImpl.defaultRouter() {
     _router = GoRouter(routes: [
+      _chooseCategoryRoute(),
       _bottomNavigationRoute(),
       _homeRoute(),
       _challengesRoute(),
@@ -25,6 +27,12 @@ class GrowDailyRouterImpl implements GrowDailyRouter {
 
   @override
   GoRouter getRouter() => _router;
+
+  RouteBase _chooseCategoryRoute() => GoRoute(
+        name: GrowDailyRoute.chooseCategory.routerName,
+        path: GrowDailyRoute.chooseCategory.path,
+        builder: (_, __) => const ChooseCategoryScreen(),
+      );
 
   RouteBase _bottomNavigationRoute() => GoRoute(
         name: GrowDailyRoute.bottomNavigation.routerName,

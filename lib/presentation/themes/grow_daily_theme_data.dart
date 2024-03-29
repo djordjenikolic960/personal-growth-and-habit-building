@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 ThemeData growDailyThemeData() {
   return ThemeData.light().copyWith(
-    scaffoldBackgroundColor: Colors.transparent,
+    scaffoldBackgroundColor: const Color(0xFFFFF3E9),
     appBarTheme: const AppBarTheme(
       foregroundColor: Color(0xFFFFF3E9),
       backgroundColor: Color(0xFFFFF3E9),

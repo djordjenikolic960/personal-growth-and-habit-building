@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'presentation/common/router/grow_daily_router.dart';
 import 'presentation/di/service_locator.dart' as presentation_service_locator;
 import 'presentation/themes/grow_daily_theme_data.dart';
+import 'domain/di/service_locator.dart' as domain_service_locator;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,6 +11,7 @@ void main() async {
 }
 
 Future<void> _initDependencies() async {
+  domain_service_locator.init();
   presentation_service_locator.init();
 }
 
