@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../domain/di/service_locator.dart';
@@ -6,6 +7,9 @@ import '../../domain/manager/category_manager/category_manager.dart';
 import '../../domain/model/categories.dart';
 import '../common/router/grow_daily_route.dart';
 import '../common/toolbar/toolbar.dart';
+import 'bloc/choose_category_bloc.dart';
+import 'bloc/choose_category_event.dart';
+import 'bloc/choose_category_state.dart';
 
 class ChooseCategoryScreen extends StatelessWidget {
   const ChooseCategoryScreen({super.key});
@@ -20,45 +24,95 @@ class ChooseCategoryScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 4.0,
-                  mainAxisSpacing: 4.0,
-                ),
-                itemCount: categories.length,
-                itemBuilder: (BuildContext context, int index) {
-                  // Generate cards with text as children
-                  return GestureDetector(
-                    onTap: () {},
-                    child: Card(
-                      color: const Color(0xFFFFF5FA),
-                      surfaceTintColor: Colors.transparent,
-                      child: Center(
-                        child: Text(
-                          textAlign: TextAlign.center,
-                          categories[index].category.name,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            color: Color(0xFFFDA759),
+        child: BlocProvider<ChooseCategoryBloc>(
+          create: (_) => serviceLocator.get<ChooseCategoryBloc>(),
+          child: BlocBuilder<ChooseCategoryBloc, ChooseCategoryState>(
+              builder: (context, state) {
+            final selectedCategories =
+                (state as CategoriesUpdated).selectedCategories;
+            return Column(
+              children: [
+                Expanded(
+                  child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 4.0,
+                      mainAxisSpacing: 4.0,
+                    ),
+                    itemCount: categories.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final isCategorySelected =
+                          selectedCategories.contains(categories[index]);
+                      return GestureDetector(
+                        onTap: () {
+                          final category = categories[index];
+                          if (selectedCategories.contains(category)) {
+                            context.read<ChooseCategoryBloc>().add(
+                                  CategoryDeselected(
+                                    category,
+                                  ),
+                                );
+                          } else {
+                            context.read<ChooseCategoryBloc>().add(
+                                  CategorySelected(
+                                    category,
+                                  ),
+                                );
+                          }
+                        },
+                        child: Card(
+                          color: isCategorySelected
+                              ? const Color(0xFFFDA759)
+                              : const Color(0xFFFFF5FA),
+                          surfaceTintColor: Colors.transparent,
+                          child: Center(
+                            child: Text(
+                              textAlign: TextAlign.center,
+                              categories[index].category.name,
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: isCategorySelected
+                                    ? const Color(0xFFFFF5FA)
+                                    : const Color(0xFFFDA759),
+                              ),
+                            ),
                           ),
                         ),
+                      );
+                    },
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    context.read<ChooseCategoryBloc>().add(SaveCategories());
+                    context.go(GrowDailyRoute.bottomNavigation.path);
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 56,
+                    width: MediaQuery.of(context).size.width,
+                    // Corrected this line
+                    decoration: BoxDecoration(
+                      color: const Color(0xfffda758),
+                      // Specify the background color for the container
+                      borderRadius: BorderRadius.circular(
+                          10), // This gives the rounded corners
+                      // Add other decoration properties if needed
+                    ),
+                    child: const Text(
+                      "Continue",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF573353),
                       ),
                     ),
-                  );
-                },
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                context.go(GrowDailyRoute.bottomNavigation.path);
-              },
-              child: const Text("Continue"),
-            ),
-          ],
+                  ),
+                ),
+              ],
+            );
+          }),
         ),
       ),
     );
