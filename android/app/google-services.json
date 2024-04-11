@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "765090809514",
+    "project_id": "personal-growth-and-habit",
+    "storage_bucket": "personal-growth-and-habit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:765090809514:android:9b4260501bb00ef568b2d3",
+        "android_client_info": {
+          "package_name": "com.example.personal_growth_and_habit_building"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaLocCUMvEt6lOzzX8m_wCZT81l8hpn_o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

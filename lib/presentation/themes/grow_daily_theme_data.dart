@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../../common/constant/colors.dart';
+
 ThemeData growDailyThemeData() {
   return ThemeData.light().copyWith(
-    scaffoldBackgroundColor: const Color(0xFFFFF3E9),
+    scaffoldBackgroundColor: DailyGrowColors.backgroundColor,
     appBarTheme: const AppBarTheme(
-      foregroundColor: Color(0xFFFFF3E9),
-      backgroundColor: Color(0xFFFFF3E9),
+      foregroundColor: DailyGrowColors.backgroundColor,
+      backgroundColor: DailyGrowColors.backgroundColor,
       centerTitle: true,
       titleTextStyle: TextStyle(
         fontSize: 20,
