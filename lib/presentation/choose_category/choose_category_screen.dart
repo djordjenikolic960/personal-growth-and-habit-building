@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../common/constant/colors.dart';
+import '../../common/constant/constant.dart';
 import '../../domain/di/service_locator.dart';
 import '../../domain/manager/category_manager/category_manager.dart';
 import '../../domain/model/categories.dart';
 import '../common/router/grow_daily_route.dart';
 import '../common/toolbar/toolbar.dart';
+import '../common/widget/primary_button.dart';
 import 'bloc/choose_category_bloc.dart';
 import 'bloc/choose_category_event.dart';
 import 'bloc/choose_category_state.dart';
@@ -23,7 +26,7 @@ class ChooseCategoryScreen extends StatelessWidget {
         title: "Explore Your Growth",
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(Constant.spaceLarge),
         child: BlocProvider<ChooseCategoryBloc>(
           create: (_) => serviceLocator.get<ChooseCategoryBloc>(),
           child: BlocBuilder<ChooseCategoryBloc, ChooseCategoryState>(
@@ -63,7 +66,7 @@ class ChooseCategoryScreen extends StatelessWidget {
                         },
                         child: Card(
                           color: isCategorySelected
-                              ? const Color(0xFFFDA759)
+                              ? DailyGrowColors.textColor
                               : const Color(0xFFFFF5FA),
                           surfaceTintColor: Colors.transparent,
                           child: Center(
@@ -74,7 +77,7 @@ class ChooseCategoryScreen extends StatelessWidget {
                                 fontSize: 20,
                                 color: isCategorySelected
                                     ? const Color(0xFFFFF5FA)
-                                    : const Color(0xFFFDA759),
+                                    : DailyGrowColors.textColor,
                               ),
                             ),
                           ),
@@ -83,32 +86,12 @@ class ChooseCategoryScreen extends StatelessWidget {
                     },
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
+                PrimaryButton(
+                  label: "Continue",
+                  onPressed: () {
                     context.read<ChooseCategoryBloc>().add(SaveCategories());
                     context.go(GrowDailyRoute.bottomNavigation.path);
                   },
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 56,
-                    width: MediaQuery.of(context).size.width,
-                    // Corrected this line
-                    decoration: BoxDecoration(
-                      color: const Color(0xfffda758),
-                      // Specify the background color for the container
-                      borderRadius: BorderRadius.circular(
-                          10), // This gives the rounded corners
-                      // Add other decoration properties if needed
-                    ),
-                    child: const Text(
-                      "Continue",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF573353),
-                      ),
-                    ),
-                  ),
                 ),
               ],
             );

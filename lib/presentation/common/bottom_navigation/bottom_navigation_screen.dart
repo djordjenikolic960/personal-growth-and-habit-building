@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../common/constant/colors.dart';
+import '../assets.dart';
 import 'screen.dart';
 import '../../../common/constant/constant.dart';
 import '../../di/service_locator.dart';
@@ -73,12 +75,11 @@ class BottomNavigationScreen extends StatelessWidget {
             child: Stack(
               children: [
                 Container(
-                  color: const Color(0xFFFFF3E9),
+                  color: DailyGrowColors.backgroundColor,
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: Image.asset(
-                    'assets/images/background.png',
+                  child: Image.asset(DailyGrowAssets.background,
                     fit: BoxFit.cover,
                   ),
                 ),
