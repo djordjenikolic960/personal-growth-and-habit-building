@@ -11,8 +11,11 @@ ThemeData growDailyThemeData() {
       centerTitle: true,
       titleTextStyle: TextStyle(
         fontSize: 20,
-        color: Color(0xFF573353),
+        color: DailyGrowColors.secondaryColor,
       ),
     ),
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
+      linearTrackColor: DailyGrowColors.secondaryColor,
+    )
   );
 }

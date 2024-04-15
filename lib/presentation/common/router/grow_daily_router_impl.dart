@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import '../../choose_category/choose_category_screen.dart';
 import '../../log_in/login_screen.dart';
+import '../../sign_up/sign_up_screen.dart';
 import '../bottom_navigation/bottom_navigation_screen.dart';
 import 'grow_daily_router.dart';
 
@@ -18,6 +19,7 @@ class GrowDailyRouterImpl implements GrowDailyRouter {
   GrowDailyRouterImpl.defaultRouter() {
     _router = GoRouter(routes: [
       _loginRoute(),
+      _signUpRoute(),
       _chooseCategoryRoute(),
       _bottomNavigationRoute(),
       _homeRoute(),
@@ -31,10 +33,16 @@ class GrowDailyRouterImpl implements GrowDailyRouter {
   GoRouter getRouter() => _router;
 
   RouteBase _loginRoute() => GoRoute(
-    name: GrowDailyRoute.logIn.routerName,
-    path: GrowDailyRoute.logIn.path,
-    builder: (_, __) => const LoginScreen(),
-  );
+        name: GrowDailyRoute.logIn.routerName,
+        path: GrowDailyRoute.logIn.path,
+        builder: (_, __) => const LoginScreen(),
+      );
+
+  RouteBase _signUpRoute() => GoRoute(
+        name: GrowDailyRoute.signUp.routerName,
+        path: GrowDailyRoute.signUp.path,
+        builder: (_, __) => const SignUpScreen(),
+      );
 
   RouteBase _chooseCategoryRoute() => GoRoute(
         name: GrowDailyRoute.chooseCategory.routerName,

@@ -8,7 +8,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       appBar: Toolbar(
-        title: "Home",
+        title: "Homepage",
       ),
     );
   }

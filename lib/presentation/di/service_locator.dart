@@ -33,6 +33,7 @@ void _registerBlocs() {
       serviceLocator(),
       serviceLocator(),
       serviceLocator(),
+      serviceLocator(),
     ),
   );
 }

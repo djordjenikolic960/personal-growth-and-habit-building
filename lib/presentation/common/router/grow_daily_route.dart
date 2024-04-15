@@ -5,10 +5,12 @@ import '../../home/home_screen.dart';
 import '../../log_in/login_screen.dart';
 import '../../progress/progress_screen.dart';
 import '../../settings/settings_screen.dart';
+import '../../sign_up/sign_up_screen.dart';
 import '../bottom_navigation/bottom_navigation_screen.dart';
 
 enum GrowDailyRoute {
   logIn(LoginScreen),
+  signUp(SignUpScreen),
   chooseCategory(ChooseCategoryScreen),
   bottomNavigation(BottomNavigationScreen),
   home(HomeScreen),
