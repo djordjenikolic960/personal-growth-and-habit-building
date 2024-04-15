@@ -9,6 +9,9 @@ class SignUpWithEmailAndPasswordUseCaseImpl
 
   @override
   Future<void> signUp(String email, String password) async {
-    await _authRepository.signUpWithEmailAndPassword(email, password);
+    await _authRepository.signUpWithEmailAndPassword(
+      email,
+      password,
+    );
   }
 }

@@ -96,9 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: Constant.spaceMedium),
                       InkWell(
-                        onTap: () {
-                          // show sign up page
-                        },
+                        onTap: () => context.go(GrowDailyRoute.signUp.path),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                             vertical: 2,

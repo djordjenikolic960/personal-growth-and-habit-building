@@ -23,15 +23,18 @@ class SignInRequested extends AuthEvent {
 class SignUpRequested extends AuthEvent {
   final String email;
   final String password;
+  final String name;
 
   SignUpRequested(
     this.email,
     this.password,
+    this.name,
   );
 
   @override
   List<Object?> get props => [
         email,
         password,
+        name,
       ];
 }
