@@ -12,6 +12,10 @@ import '../use_case/auth/sign_out_use_case.dart';
 import '../use_case/auth/sign_out_use_case_impl.dart';
 import '../use_case/auth/sign_up_with_email_and_password_use_case.dart';
 import '../use_case/auth/sign_up_with_email_and_password_use_case_impl.dart';
+import '../use_case/onboarding/complete_onboarding_use_case.dart';
+import '../use_case/onboarding/complete_onboarding_use_case_impl.dart';
+import '../use_case/onboarding/is_onboarding_completed_use_case.dart';
+import '../use_case/onboarding/is_onboarding_completed_use_case_impl.dart';
 
 final serviceLocator = GetIt.instance;
 
@@ -51,6 +55,18 @@ void _registerUseCases() {
 
   serviceLocator.registerFactory<GetUserNameUseCase>(
     () => GetUserNameUseCaseImpl(
+      serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerFactory<IsOnboardingCompletedUseCase>(
+    () => IsOnboardingCompletedUseCaseImpl(
+      serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerFactory<CompleteOnboardingUseCase>(
+    () => CompleteOnboardingUseCaseImpl(
       serviceLocator(),
     ),
   );

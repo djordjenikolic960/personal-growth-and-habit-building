@@ -5,6 +5,7 @@ import '../common/router/grow_daily_router.dart';
 import '../common/router/grow_daily_router_impl.dart';
 import '../common/widget/text_input_field/bloc/text_input_field_bloc.dart';
 import '../log_in/bloc/auth_bloc.dart';
+import '../onboarding/bloc/onboarding_bloc.dart';
 
 final serviceLocator = GetIt.instance;
 
@@ -36,10 +37,17 @@ void _registerBlocs() {
       serviceLocator(),
     ),
   );
+  serviceLocator.registerFactory<OnBoardingBloc>(
+    () => OnBoardingBloc(
+      serviceLocator(),
+    ),
+  );
 }
 
 void _registerRouter() {
   serviceLocator.registerLazySingleton<GrowDailyRouter>(
-    () => GrowDailyRouterImpl.defaultRouter(),
+    () => GrowDailyRouterImpl.defaultRouter(
+      serviceLocator(),
+    ),
   );
 }
