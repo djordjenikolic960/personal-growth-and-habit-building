@@ -1,6 +1,8 @@
 import 'package:go_router/go_router.dart';
+import '../../../domain/use_case/onboarding/is_onboarding_completed_use_case.dart';
 import '../../choose_category/choose_category_screen.dart';
 import '../../log_in/login_screen.dart';
+import '../../onboarding/onboarding_screen.dart';
 import '../../sign_up/sign_up_screen.dart';
 import '../bottom_navigation/bottom_navigation_screen.dart';
 import 'grow_daily_router.dart';
@@ -13,20 +15,45 @@ import 'grow_daily_route.dart';
 
 class GrowDailyRouterImpl implements GrowDailyRouter {
   late final GoRouter _router;
+  final IsOnboardingCompletedUseCase? _isOnboardingCompletedUseCase;
 
-  GrowDailyRouterImpl(this._router);
+  GrowDailyRouterImpl(
+    this._router,
+    this._isOnboardingCompletedUseCase,
+  );
 
-  GrowDailyRouterImpl.defaultRouter() {
-    _router = GoRouter(routes: [
-      _loginRoute(),
-      _signUpRoute(),
-      _chooseCategoryRoute(),
-      _bottomNavigationRoute(),
-      _homeRoute(),
-      _challengesRoute(),
-      _progressRoute(),
-      _settingRoute(),
-    ]);
+  GrowDailyRouterImpl.defaultRouter(this._isOnboardingCompletedUseCase) {
+    _router = GoRouter(
+        initialLocation: GrowDailyRoute.bottomNavigation.path,
+        redirect: (context, state) async {
+          return await _getRedirectRoute(state);
+        },
+        routes: [
+          _onBoardingRoute(),
+          _loginRoute(),
+          _signUpRoute(),
+          _chooseCategoryRoute(),
+          _bottomNavigationRoute(),
+          _homeRoute(),
+          _challengesRoute(),
+          _progressRoute(),
+          _settingRoute(),
+        ]);
+  }
+
+  Future<String?> _getRedirectRoute(GoRouterState state) async {
+    final isCompleted = await _isOnboardingCompletedUseCase!.isCompleted();
+    final currentPath = state.path;
+
+    /// todo probably need to check if log in is valid at this point
+    if (!isCompleted && currentPath != GrowDailyRoute.onboarding.path) {
+      return GrowDailyRoute.onboarding.path;
+    } else if (isCompleted &&
+        (currentPath == GrowDailyRoute.onboarding.path || currentPath == '/')) {
+      return GrowDailyRoute.logIn.path;
+    }
+
+    return null;
   }
 
   @override
@@ -36,6 +63,12 @@ class GrowDailyRouterImpl implements GrowDailyRouter {
         name: GrowDailyRoute.logIn.routerName,
         path: GrowDailyRoute.logIn.path,
         builder: (_, __) => const LoginScreen(),
+      );
+
+  RouteBase _onBoardingRoute() => GoRoute(
+        name: GrowDailyRoute.onboarding.routerName,
+        path: GrowDailyRoute.onboarding.path,
+        builder: (_, __) => const OnBoardingScreen(),
       );
 
   RouteBase _signUpRoute() => GoRoute(

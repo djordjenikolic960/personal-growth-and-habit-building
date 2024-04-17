@@ -8,14 +8,11 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<void> saveUserName(final String name) async {
-    await _sharedPreferencesManager.saveString("userName", name);
+    await _sharedPreferencesManager.save<String>("userName", name);
   }
 
   @override
   Future<String?> getUserName(String key) async {
-   await _sharedPreferencesManager.getString(key);
+    return await _sharedPreferencesManager.get<String?>(key);
   }
-
-
-
 }
