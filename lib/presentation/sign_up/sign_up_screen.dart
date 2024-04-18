@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../common/constant/colors.dart';
 import '../../common/constant/constant.dart';
+import '../../common/extensions/localization_extension.dart';
 import '../../data/di/service_locator.dart';
 import '../common/assets.dart';
 import '../common/router/grow_daily_route.dart';
@@ -59,7 +60,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: Constant.spaceJumbo,
                       ),
                       Text(
-                        "Create your account".toUpperCase(),
+                        context.l10n.signUpTitle.toUpperCase(),
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           color: DailyGrowColors.secondaryColor,
@@ -73,7 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       TextInputField(
                         controller: nameController,
                         icon: Icons.account_circle_sharp,
-                        hintText: "Name",
+                        hintText: context.l10n.name,
                       ),
                       const SizedBox(
                         height: Constant.spaceLarge,
@@ -81,7 +82,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       TextInputField(
                         controller: emailController,
                         icon: Icons.email_outlined,
-                        hintText: "Email",
+                        hintText: context.l10n.email,
                       ),
                       const SizedBox(
                         height: Constant.spaceLarge,
@@ -89,12 +90,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       TextInputField(
                         controller: passwordController,
                         icon: Icons.lock_outline,
-                        hintText: "Password",
+                        hintText: context.l10n.password,
                         isPassword: true,
                       ),
                       const Spacer(),
                       PrimaryButton(
-                        label: "Create Account",
+                        label: context.l10n.createAccount,
                         onPressed: () {
                           context.read<AuthBloc>().add(
                                 SignUpRequested(
@@ -114,18 +115,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             horizontal: 8.0,
                           ),
                           child: RichText(
-                            text: const TextSpan(
+                            text: TextSpan(
                               children: [
                                 TextSpan(
-                                  text: "Already have an account? ",
-                                  style: TextStyle(
+                                  text: context.l10n.alreadyHaveAnAccount,
+                                  style: const TextStyle(
                                     color: DailyGrowColors.secondaryColor,
                                     fontSize: 12,
                                   ),
                                 ),
                                 TextSpan(
-                                  text: "Log in",
-                                  style: TextStyle(
+                                  text: context.l10n.login,
+                                  style: const TextStyle(
                                     color: DailyGrowColors.secondaryColor,
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,

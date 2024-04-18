@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../common/constant/colors.dart';
 import '../../common/constant/constant.dart';
+import '../../common/extensions/localization_extension.dart';
 import '../../domain/di/service_locator.dart';
 import '../../domain/manager/category_manager/category_manager.dart';
 import '../../domain/model/categories.dart';
@@ -20,10 +21,10 @@ class ChooseCategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final categoryManager = serviceLocator.get<CategoryManager>();
-    final categories = categoryManager.initializeCategories();
+    final categories = categoryManager.initializeCategories(context);
     return Scaffold(
-      appBar: const Toolbar(
-        title: "Explore Your Growth",
+      appBar: Toolbar(
+        title: context.l10n.chooseCategoryTitle,
       ),
       body: SafeArea(
         child: Padding(
@@ -88,7 +89,7 @@ class ChooseCategoryScreen extends StatelessWidget {
                     ),
                   ),
                   PrimaryButton(
-                    label: "Continue",
+                    label: context.l10n.continueLabel,
                     onPressed: () {
                       context.read<ChooseCategoryBloc>().add(SaveCategories());
                       context.go(GrowDailyRoute.bottomNavigation.path);

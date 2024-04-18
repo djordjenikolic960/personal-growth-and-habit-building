@@ -6,6 +6,7 @@ import 'presentation/di/service_locator.dart' as presentation_service_locator;
 import 'presentation/themes/grow_daily_theme_data.dart';
 import 'domain/di/service_locator.dart' as domain_service_locator;
 import 'data/di/service_locator.dart' as data_service_locator;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,10 +29,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: "Grow Daily",
       theme: growDailyThemeData(),
       routerConfig:
           presentation_service_locator.get<GrowDailyRouter>().getRouter(),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }

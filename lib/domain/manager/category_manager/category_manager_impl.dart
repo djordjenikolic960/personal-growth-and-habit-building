@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 import '../../model/categories.dart';
 
 import '../../model/category.dart';
@@ -6,7 +8,8 @@ import 'category_manager.dart';
 
 class CategoryManagerImpl implements CategoryManager {
   @override
-  List<Category> initializeCategories() {
+  List<Category> initializeCategories(BuildContext context) {
+    //todo translate this maybe
     const mindfulnessTasks = [
       Task("Meditate for 10 minutes"),
       Task("Practice deep breathing for 5 minutes"),
