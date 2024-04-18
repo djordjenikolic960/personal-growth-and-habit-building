@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../../common/extensions/localization_extension.dart';
 import '../common/router/grow_daily_route.dart';
 import '../common/widget/primary_button.dart';
 import 'bloc/onboarding_event.dart';
@@ -29,26 +30,23 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     /// not creating manager for this since this content is static and it will not be fetched from some remote api
     final onboardingPages = [
       OnboardingContent(
-        title: "Welcome to Daily Grow",
-        body: "We can help you to be a better version of yourself.",
+        title: context.l10n.onBoardingScreen1Title,
+        body: context.l10n.onBoardingScreen1Body,
         image: Image.asset(DailyGrowAssets.onboardingContent1),
       ),
       OnboardingContent(
-        title: "Create new habit easily",
-        body:
-            "Easily build life-changing habits with our guided setup. Start improving with clear goals and simple steps.",
+        title: context.l10n.onBoardingScreen2Title,
+        body: context.l10n.onBoardingScreen2Body,
         image: Image.asset(DailyGrowAssets.onboardingContent2),
       ),
       OnboardingContent(
-        title: "Keep track of you progress",
-        body:
-            "See your progress with our intuitive dashboard. Track daily achievements and trends to stay motivated.",
+        title: context.l10n.onBoardingScreen3Title,
+        body: context.l10n.onBoardingScreen3Body,
         image: Image.asset(DailyGrowAssets.onboardingContent3),
       ),
       OnboardingContent(
-        title: "Join a Supportive Community",
-        body:
-            "Join a community striving for growth. Share tips, celebrate success, and support each other along the way.",
+        title: context.l10n.onBoardingScreen4Title,
+        body: context.l10n.onBoardingScreen4Body,
         image: Image.asset(DailyGrowAssets.onboardingContent4),
       ),
     ];
@@ -98,7 +96,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           horizontal: Constant.spaceJumbo),
                       child: isLastPage
                           ? PrimaryButton(
-                              label: "Get Started",
+                              label: context.l10n.getStarted,
                               onPressed: () {
                                 context
                                     .read<OnBoardingBloc>()
@@ -115,7 +113,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                       vertical: Constant.spaceSmall,
                                     ),
                                     child: Text(
-                                      "Skip",
+                                      context.l10n.skip,
                                       style: context.textTheme.bodyLarge,
                                     ),
                                   ),
@@ -139,7 +137,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                       vertical: Constant.spaceSmall,
                                     ),
                                     child: Text(
-                                      "Next",
+                                      context.l10n.next,
                                       style: context.textTheme.bodyLarge,
                                     ),
                                   ),

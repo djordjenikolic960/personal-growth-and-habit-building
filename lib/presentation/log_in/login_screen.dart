@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../common/constant/colors.dart';
 import '../../common/constant/constant.dart';
+import '../../common/extensions/localization_extension.dart';
 import '../../data/di/service_locator.dart';
 import '../common/assets.dart';
 import '../common/router/grow_daily_route.dart';
@@ -56,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: Constant.spaceJumbo,
                       ),
                       Text(
-                        "Welcome to \n Daily Grow".toUpperCase(),
+                        context.l10n.logInScreenTitle.toUpperCase(),
                         style: const TextStyle(
                           color: DailyGrowColors.secondaryColor,
                           fontSize: 28,
@@ -69,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextInputField(
                         controller: emailController,
                         icon: Icons.email_outlined,
-                        hintText: "Email",
+                        hintText: context.l10n.email,
                       ),
                       const SizedBox(
                         height: Constant.spaceLarge,
@@ -77,12 +78,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextInputField(
                         controller: passwordController,
                         icon: Icons.lock_outline,
-                        hintText: "Password",
+                        hintText: context.l10n.password,
                         isPassword: true,
                       ),
                       const Spacer(),
                       PrimaryButton(
-                        label: "Login",
+                        label: context.l10n.login,
                         onPressed: () {
                           context.read<AuthBloc>().add(
                                 SignInRequested(
@@ -101,16 +102,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             horizontal: 8.0,
                           ),
                           child: RichText(
-                              text: const TextSpan(children: [
+                              text: TextSpan(children: [
                             TextSpan(
-                                text: "Don’t have an account? ",
-                                style: TextStyle(
+                                text: context.l10n.doNotHaveAccount,
+                                style: const TextStyle(
                                   color: DailyGrowColors.secondaryColor,
                                   fontSize: 12,
                                 )),
                             TextSpan(
-                                text: "Sign up",
-                                style: TextStyle(
+                                text: context.l10n.signUp,
+                                style: const TextStyle(
                                   color: DailyGrowColors.secondaryColor,
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,

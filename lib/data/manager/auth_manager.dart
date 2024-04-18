@@ -1,4 +1,3 @@
-
 abstract interface class AuthManager {
   Future<void> signInWithEmailAndPassword(String email, String password);
 

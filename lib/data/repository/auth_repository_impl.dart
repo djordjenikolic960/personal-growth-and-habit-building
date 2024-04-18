@@ -13,12 +13,11 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> signOut() async {
-   await _authManager.signOut();
+    await _authManager.signOut();
   }
 
   @override
   Future<void> signUpWithEmailAndPassword(String email, String password) async {
     await _authManager.signUpWithEmailAndPassword(email, password);
   }
-  
 }

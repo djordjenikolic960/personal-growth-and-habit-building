@@ -1,0 +1,31 @@
+{
+  "appName": "Daily Grow",
+  "onBoardingScreen1Title": "Welcome to Daily Grow",
+  "onBoardingScreen1Body": "We can help you to be a better version of yourself.",
+  "onBoardingScreen2Title": "Create new habit easily",
+  "onBoardingScreen2Body": "Easily build life-changing habits with our guided setup. Start improving with clear goals and simple steps.",
+  "onBoardingScreen3Title": "Keep track of you progress",
+  "onBoardingScreen3Body": "See your progress with our intuitive dashboard. Track daily achievements and trends to stay motivated.",
+  "onBoardingScreen4Title": "Join a Supportive Community",
+  "onBoardingScreen4Body": "Join a community striving for growth. Share tips, celebrate success, and support each other along the way.",
+  "getStarted": "Get Started",
+  "skip": "Skip",
+  "next": "Next",
+
+  "logInScreenTitle": "Welcome to \n Daily Grow",
+  "email": "Email",
+  "password": "Password",
+  "login": "Log in",
+  "doNotHaveAccount": "Don’t have an account? ",
+
+  "signUpTitle": "Create your account",
+  "signUp": "Sign up",
+  "name": "Name",
+  "createAccount": "Create Account",
+  "alreadyHaveAnAccount": "Already have an account? ",
+
+  "chooseCategoryTitle": "Explore Your Growth",
+  "continueLabel": "Continue"
+
+
+}

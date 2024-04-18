@@ -10,5 +10,4 @@ class GetUserNameUseCaseImpl implements GetUserNameUseCase {
   Future<String?> get(String key) async {
     return await _userRepository.getUserName(key);
   }
-
 }

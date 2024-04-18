@@ -79,7 +79,8 @@ class BottomNavigationScreen extends StatelessWidget {
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: Image.asset(DailyGrowAssets.background,
+                  child: Image.asset(
+                    DailyGrowAssets.background,
                     fit: BoxFit.cover,
                   ),
                 ),
