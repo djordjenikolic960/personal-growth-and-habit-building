@@ -5,10 +5,16 @@ import '../../common/constant/colors.dart';
 ThemeData growDailyThemeData() {
   return ThemeData.light().copyWith(
       scaffoldBackgroundColor: DailyGrowColors.backgroundColor,
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        backgroundColor: DailyGrowColors.textColor,
+      ),
       appBarTheme: const AppBarTheme(
         foregroundColor: DailyGrowColors.backgroundColor,
         backgroundColor: DailyGrowColors.backgroundColor,
         centerTitle: true,
+        iconTheme: IconThemeData(
+          color: DailyGrowColors.secondaryColor,
+        ),
         titleTextStyle: TextStyle(
           fontSize: 20,
           fontFamily: "KlasikRegular",

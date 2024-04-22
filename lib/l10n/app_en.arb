@@ -11,21 +11,18 @@
   "getStarted": "Get Started",
   "skip": "Skip",
   "next": "Next",
-
   "logInScreenTitle": "Welcome to \n Daily Grow",
   "email": "Email",
   "password": "Password",
   "login": "Log in",
   "doNotHaveAccount": "Don’t have an account? ",
-
   "signUpTitle": "Create your account",
   "signUp": "Sign up",
   "name": "Name",
   "createAccount": "Create Account",
   "alreadyHaveAnAccount": "Already have an account? ",
-
   "chooseCategoryTitle": "Explore Your Growth",
-  "continueLabel": "Continue"
-
-
+  "continueLabel": "Continue",
+  "homepageTitle": "Homepage",
+  "habits": "Habits"
 }

@@ -1,6 +1,7 @@
 import '../../../common/constant/constant.dart';
 import '../../challenges/challenges_screen.dart';
 import '../../choose_category/choose_category_screen.dart';
+import '../../create_habit/create_habit_screen.dart';
 import '../../home/home_screen.dart';
 import '../../log_in/login_screen.dart';
 import '../../onboarding/onboarding_screen.dart';
@@ -18,7 +19,8 @@ enum GrowDailyRoute {
   home(HomeScreen),
   challenges(ChallengesScreen),
   progress(ProgressScreen),
-  settings(SettingsScreen);
+  settings(SettingsScreen),
+  createHabit(CreateHabitScreen);
 
   final Type _routeType;
 

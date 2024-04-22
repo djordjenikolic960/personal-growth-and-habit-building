@@ -7,4 +7,6 @@ class DailyGrowAssets {
   static const onboardingContent2 = "${assetsPath}content2.png";
   static const onboardingContent3 = "${assetsPath}content3.png";
   static const onboardingContent4 = "${assetsPath}content4.png";
+  static const motivationalContent =
+      "${assetsPath}motivational_card_content.png";
 }
