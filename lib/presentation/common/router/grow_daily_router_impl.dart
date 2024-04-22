@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import '../../../domain/use_case/onboarding/is_onboarding_completed_use_case.dart';
 import '../../choose_category/choose_category_screen.dart';
+import '../../create_habit/create_habit_screen.dart';
 import '../../log_in/login_screen.dart';
 import '../../onboarding/onboarding_screen.dart';
 import '../../sign_up/sign_up_screen.dart';
@@ -38,6 +39,7 @@ class GrowDailyRouterImpl implements GrowDailyRouter {
           _challengesRoute(),
           _progressRoute(),
           _settingRoute(),
+          _createHabitRoute(),
         ]);
   }
 
@@ -111,5 +113,11 @@ class GrowDailyRouterImpl implements GrowDailyRouter {
         name: GrowDailyRoute.settings.routerName,
         path: GrowDailyRoute.settings.path,
         builder: (_, __) => const SettingsScreen(),
+      );
+
+  RouteBase _createHabitRoute() => GoRoute(
+        name: GrowDailyRoute.createHabit.routerName,
+        path: GrowDailyRoute.createHabit.path,
+        builder: (_, __) => const CreateHabitScreen(),
       );
 }
