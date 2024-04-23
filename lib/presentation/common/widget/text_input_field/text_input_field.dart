@@ -10,14 +10,14 @@ import 'bloc/text_input_field_state.dart';
 
 class TextInputField extends StatelessWidget {
   final TextEditingController controller;
-  final IconData icon;
+  final IconData? icon;
   final String hintText;
   final bool isPassword;
 
   const TextInputField({
     super.key,
     required this.controller,
-    required this.icon,
+    this.icon,
     required this.hintText,
     this.isPassword = false,
   });
@@ -29,20 +29,25 @@ class TextInputField extends StatelessWidget {
       child: BlocBuilder<InputFieldBloc, InputFieldState>(
         builder: (context, state) {
           return TextFormField(
+            maxLines: 1,
             cursorColor: DailyGrowColors.textColor,
             controller: controller,
             autocorrect: false,
             obscureText: isPassword && !state.isPasswordVisible,
             style: TextStyle(color: _getIconColor(state)),
             decoration: InputDecoration(
-              prefixIcon: Container(
-                  margin: const EdgeInsets.only(right: Constant.spaceMedium),
-                  decoration: BoxDecoration(
-                    border: Border(
-                        right: BorderSide(
-                            color: DailyGrowColors.textColor.withOpacity(0.7))),
-                  ),
-                  child: Icon(icon, color: _getIconColor(state))),
+              prefixIcon: icon != null
+                  ? Container(
+                      margin:
+                          const EdgeInsets.only(right: Constant.spaceMedium),
+                      decoration: BoxDecoration(
+                        border: Border(
+                            right: BorderSide(
+                                color: DailyGrowColors.textColor
+                                    .withOpacity(0.7))),
+                      ),
+                      child: Icon(icon, color: _getIconColor(state)))
+                  : null,
               suffixIcon: isPassword
                   ? IconButton(
                       icon: Icon(

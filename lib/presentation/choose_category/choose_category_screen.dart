@@ -4,13 +4,13 @@ import 'package:go_router/go_router.dart';
 
 import '../../common/constant/colors.dart';
 import '../../common/constant/constant.dart';
-import '../../common/extensions/localization_extension.dart';
 import '../../domain/di/service_locator.dart';
 import '../../domain/manager/category_manager/category_manager.dart';
-import '../../domain/model/categories.dart';
+import '../../domain/entity/categories.dart';
 import '../common/router/grow_daily_route.dart';
 import '../common/toolbar/toolbar.dart';
 import '../common/widget/primary_button.dart';
+import '../extensions/localization_extension.dart';
 import 'bloc/choose_category_bloc.dart';
 import 'bloc/choose_category_event.dart';
 import 'bloc/choose_category_state.dart';

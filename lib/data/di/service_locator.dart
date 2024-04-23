@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import '../../domain/repository/auth_repository.dart';
 import '../../domain/repository/preferences_repository.dart';
 import '../../domain/repository/user_repository.dart';
+import '../converters/user_converter.dart';
 import '../manager/auth_manager.dart';
 import '../manager/auth_manager_impl.dart';
 import '../manager/shared_preferences_manager.dart';
@@ -18,7 +19,8 @@ Future<void> init() async {
   ///_registerLocalDatabase();
   ///_registerNetworkClient();
   ///_registerLocalStorage();
-  ///_registerConverters();
+  _registerConverters();
+
   ///_registerHelpers();
   _registerExternalServices();
   _registerManagers();
@@ -27,6 +29,12 @@ Future<void> init() async {
 
 T get<T extends Object>() {
   return serviceLocator.get<T>();
+}
+
+void _registerConverters() {
+  serviceLocator.registerLazySingleton<UserConverter>(
+    () => UserConverter(),
+  );
 }
 
 void _registerExternalServices() {
@@ -55,6 +63,8 @@ void _registerRepositories() {
 
   serviceLocator.registerLazySingleton<UserRepository>(
     () => UserRepositoryImpl(
+      serviceLocator(),
+      serviceLocator(),
       serviceLocator(),
     ),
   );

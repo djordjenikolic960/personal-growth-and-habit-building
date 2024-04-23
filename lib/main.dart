@@ -1,6 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'data/di/service_locator.dart';
 import 'firebase_options.dart';
+import 'presentation/bloc/user_bloc/user_bloc.dart';
 import 'presentation/common/router/grow_daily_router.dart';
 import 'presentation/di/service_locator.dart' as presentation_service_locator;
 import 'presentation/themes/grow_daily_theme_data.dart';
@@ -28,12 +31,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      theme: growDailyThemeData(),
-      routerConfig:
-          presentation_service_locator.get<GrowDailyRouter>().getRouter(),
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-    );
+    return BlocProvider<UserBloc>(
+        create: (_) => serviceLocator.get<UserBloc>(),
+        child: MaterialApp.router(
+          theme: growDailyThemeData(),
+          routerConfig:
+              presentation_service_locator.get<GrowDailyRouter>().getRouter(),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+        ));
   }
 }

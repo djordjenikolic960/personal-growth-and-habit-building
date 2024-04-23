@@ -23,4 +23,9 @@ class AuthManagerImpl implements AuthManager {
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
   }
+
+  @override
+  Stream<User?> authStateChanges() {
+    return _firebaseAuth.authStateChanges();
+  }
 }

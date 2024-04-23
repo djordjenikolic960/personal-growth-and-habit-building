@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../common/constant/constant.dart';
-import '../../../common/extensions/theme_extensions.dart';
+import '../../extensions/theme_extensions.dart';
 
 class OnboardingContent extends StatelessWidget {
   const OnboardingContent({

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import '../../../domain/model/category.dart';
+import '../../../domain/entity/category.dart';
 
 @immutable
 abstract interface class ChooseCategoryState extends Equatable {}

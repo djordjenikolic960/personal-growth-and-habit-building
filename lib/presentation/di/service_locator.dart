@@ -1,4 +1,6 @@
 import 'package:get_it/get_it.dart';
+import '../bloc/app_config_bloc/app_config_bloc.dart';
+import '../bloc/user_bloc/user_bloc.dart';
 import '../choose_category/bloc/choose_category_bloc.dart';
 import '../common/bottom_navigation/bloc/bottom_navigation_bloc.dart';
 import '../common/router/grow_daily_router.dart';
@@ -42,12 +44,23 @@ void _registerBlocs() {
       serviceLocator(),
     ),
   );
+
+  serviceLocator.registerFactory<UserBloc>(
+    () => UserBloc(
+      serviceLocator(),
+      serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerFactory<AppConfigBloc>(
+    () => AppConfigBloc(
+      serviceLocator(),
+    ),
+  );
 }
 
 void _registerRouter() {
   serviceLocator.registerLazySingleton<GrowDailyRouter>(
-    () => GrowDailyRouterImpl.defaultRouter(
-      serviceLocator(),
-    ),
+    () => GrowDailyRouterImpl.defaultRouter(),
   );
 }

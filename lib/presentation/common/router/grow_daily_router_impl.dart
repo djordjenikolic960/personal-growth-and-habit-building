@@ -1,10 +1,11 @@
 import 'package:go_router/go_router.dart';
-import '../../../domain/use_case/onboarding/is_onboarding_completed_use_case.dart';
 import '../../choose_category/choose_category_screen.dart';
 import '../../create_habit/create_habit_screen.dart';
+import '../../extensions/user_extension.dart';
 import '../../log_in/login_screen.dart';
 import '../../onboarding/onboarding_screen.dart';
 import '../../sign_up/sign_up_screen.dart';
+import '../../splash/splash_screen.dart';
 import '../bottom_navigation/bottom_navigation_screen.dart';
 import 'grow_daily_router.dart';
 
@@ -16,20 +17,33 @@ import 'grow_daily_route.dart';
 
 class GrowDailyRouterImpl implements GrowDailyRouter {
   late final GoRouter _router;
-  final IsOnboardingCompletedUseCase? _isOnboardingCompletedUseCase;
 
   GrowDailyRouterImpl(
     this._router,
-    this._isOnboardingCompletedUseCase,
   );
 
-  GrowDailyRouterImpl.defaultRouter(this._isOnboardingCompletedUseCase) {
+  GrowDailyRouterImpl.defaultRouter() {
     _router = GoRouter(
-        initialLocation: GrowDailyRoute.bottomNavigation.path,
         redirect: (context, state) async {
-          return await _getRedirectRoute(state);
+          final path = state.fullPath ?? GrowDailyRoute.splash.path;
+
+          if (path == GrowDailyRoute.splash.path) {
+            // Don't redirect from splash page
+            return null;
+          }
+
+          final user = context.getCurrentUser;
+          if (user != null) {
+            // Don't redirect if user is already logged in
+            return null;
+          } else {
+            return GrowDailyRoute.logIn.path;
+          }
+
+          return null;
         },
         routes: [
+          _splashRoute(),
           _onBoardingRoute(),
           _loginRoute(),
           _signUpRoute(),
@@ -43,23 +57,14 @@ class GrowDailyRouterImpl implements GrowDailyRouter {
         ]);
   }
 
-  Future<String?> _getRedirectRoute(GoRouterState state) async {
-    final isCompleted = await _isOnboardingCompletedUseCase!.isCompleted();
-    final currentPath = state.path;
-
-    /// todo probably need to check if log in is valid at this point
-    if (!isCompleted && currentPath != GrowDailyRoute.onboarding.path) {
-      return GrowDailyRoute.onboarding.path;
-    } else if (isCompleted &&
-        (currentPath == GrowDailyRoute.onboarding.path || currentPath == '/')) {
-      return GrowDailyRoute.logIn.path;
-    }
-
-    return null;
-  }
-
   @override
   GoRouter getRouter() => _router;
+
+  RouteBase _splashRoute() => GoRoute(
+        name: GrowDailyRoute.splash.routerName,
+        path: GrowDailyRoute.splash.path,
+        builder: (_, __) => const SplashScreen(),
+      );
 
   RouteBase _loginRoute() => GoRoute(
         name: GrowDailyRoute.logIn.routerName,

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../common/extensions/localization_extension.dart';
 import '../common/router/grow_daily_route.dart';
 import '../common/widget/primary_button.dart';
+import '../extensions/localization_extension.dart';
+import '../extensions/theme_extensions.dart';
 import 'bloc/onboarding_event.dart';
 import 'bloc/onboarding_state.dart';
 import '../../common/constant/constant.dart';
-import '../../common/extensions/theme_extensions.dart';
 import '../common/assets.dart';
 import '../di/service_locator.dart';
 import 'bloc/onboarding_bloc.dart';

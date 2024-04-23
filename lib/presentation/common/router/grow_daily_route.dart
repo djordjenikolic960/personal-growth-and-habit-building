@@ -8,9 +8,11 @@ import '../../onboarding/onboarding_screen.dart';
 import '../../progress/progress_screen.dart';
 import '../../settings/settings_screen.dart';
 import '../../sign_up/sign_up_screen.dart';
+import '../../splash/splash_screen.dart';
 import '../bottom_navigation/bottom_navigation_screen.dart';
 
 enum GrowDailyRoute {
+  splash(SplashScreen),
   onboarding(OnBoardingScreen),
   logIn(LoginScreen),
   signUp(SignUpScreen),
@@ -29,7 +31,7 @@ enum GrowDailyRoute {
   String get routerName => "$_routeType";
 
   String get path {
-    if (this == GrowDailyRoute.onboarding) {
+    if (this == GrowDailyRoute.splash) {
       return Constant.slash;
     } else {
       return "${Constant.slash}$routerName";
