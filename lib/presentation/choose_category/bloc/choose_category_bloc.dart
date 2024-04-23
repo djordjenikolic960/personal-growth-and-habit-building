@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../domain/model/category.dart';
+import '../../../domain/entity/category.dart';
 import 'choose_category_event.dart';
 import 'choose_category_state.dart';
 

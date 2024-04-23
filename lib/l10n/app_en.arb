@@ -24,5 +24,7 @@
   "chooseCategoryTitle": "Explore Your Growth",
   "continueLabel": "Continue",
   "homepageTitle": "Homepage",
-  "habits": "Habits"
+  "habits": "Habits",
+  "new_habit": "New Habit",
+  "new_habit_hint": "Enter habit name"
 }

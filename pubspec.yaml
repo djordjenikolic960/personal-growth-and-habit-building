@@ -43,6 +43,7 @@ dependencies:
   firebase_auth: ^4.19.0
   flutter_localization: ^0.2.0
   intl: ^0.18.1
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:
@@ -71,3 +72,6 @@ flutter:
      - family: KlasikRegular
        fonts:
          - asset: assets/fonts/Klasik Regular.otf
+     - family: Manrope
+       fonts:
+         - asset: assets/fonts/Manrope-Regular.ttf

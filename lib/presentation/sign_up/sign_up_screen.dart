@@ -4,12 +4,12 @@ import 'package:go_router/go_router.dart';
 
 import '../../common/constant/colors.dart';
 import '../../common/constant/constant.dart';
-import '../../common/extensions/localization_extension.dart';
 import '../../data/di/service_locator.dart';
 import '../common/assets.dart';
 import '../common/router/grow_daily_route.dart';
 import '../common/widget/primary_button.dart';
 import '../common/widget/text_input_field/text_input_field.dart';
+import '../extensions/localization_extension.dart';
 import '../log_in/bloc/auth_bloc.dart';
 import '../log_in/bloc/auth_event.dart';
 import '../log_in/bloc/auth_state.dart';

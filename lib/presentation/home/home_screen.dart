@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../bloc/user_bloc/user_bloc.dart';
+import '../bloc/user_bloc/user_event.dart';
+import '../bloc/user_bloc/user_state.dart';
 import '../common/router/grow_daily_route.dart';
+import '../extensions/localization_extension.dart';
+import '../extensions/theme_extensions.dart';
 import 'widgets/diagonal_half_painter.dart';
 import '../../common/constant/colors.dart';
 import '../../common/constant/constant.dart';
-import '../../common/extensions/localization_extension.dart';
-import '../../common/extensions/theme_extensions.dart';
 import '../common/assets.dart';
 import '../common/toolbar/toolbar.dart';
 import '../common/widget/base_card.dart';
@@ -15,55 +19,66 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: Toolbar(
-        title: context.l10n.homepageTitle,
-        actions: const [
-          Padding(
-            padding: EdgeInsets.all(Constant.spaceMedium),
-            child: CircleAvatar(
-              backgroundColor: DailyGrowColors.hintColor,
-              radius: 20,
-              child: Text("P"),
+    return BlocListener<UserBloc, UserState>(
+      listener: (context, state) {
+        if (state is UserLoggedOut) {
+          context.go(GrowDailyRoute.bottomNavigation.path);
+        }
+      },
+      child: Scaffold(
+        appBar: Toolbar(
+          title: context.l10n.homepageTitle,
+          actions: [
+            InkWell(
+              onTap: () {
+                context.read<UserBloc>().add(LogOut());
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(Constant.spaceMedium),
+                child: CircleAvatar(
+                    backgroundColor: DailyGrowColors.hintColor,
+                    radius: 20,
+                    child: Icon(Icons.logout_outlined)),
+              ),
             ),
-          ),
-        ],
-      ),
-      body: const SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _MotivationalQuote(),
-            _HabitHeading(),
-            SizedBox(
-              height: Constant.spaceMedium,
-            ),
-            _HabitRow("Read a book", DailyGrowColors.textColor),
-            SizedBox(
-              height: Constant.spaceMedium,
-            ),
-            _HabitRow("Exercise", Colors.blue),
-            SizedBox(
-              height: Constant.spaceMedium,
-            ),
-            _HabitRow("Wake Up Early", Colors.red),
-            SizedBox(
-              height: Constant.spaceMedium,
-            ),
-            _HabitRow("Walk Dog", Colors.deepPurple),
-            SizedBox(
-              height: 400,
-            )
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.push(GrowDailyRoute.createHabit.path);
-        },
-        child: const Icon(
-          Icons.add,
-          color: DailyGrowColors.secondaryColor,
+        body: const SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _MotivationalQuote(),
+              _HabitHeading(),
+              SizedBox(
+                height: Constant.spaceMedium,
+              ),
+              _HabitRow("Read a book", DailyGrowColors.textColor),
+              SizedBox(
+                height: Constant.spaceMedium,
+              ),
+              _HabitRow("Exercise", Colors.blue),
+              SizedBox(
+                height: Constant.spaceMedium,
+              ),
+              _HabitRow("Wake Up Early", Colors.red),
+              SizedBox(
+                height: Constant.spaceMedium,
+              ),
+              _HabitRow("Walk Dog", Colors.deepPurple),
+              SizedBox(
+                height: 400,
+              )
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            context.push(GrowDailyRoute.createHabit.path);
+          },
+          child: const Icon(
+            Icons.add,
+            color: DailyGrowColors.secondaryColor,
+          ),
         ),
       ),
     );
@@ -73,7 +88,6 @@ class HomeScreen extends StatelessWidget {
 class _MotivationalQuote extends StatelessWidget {
   const _MotivationalQuote();
 
-  static const _cardHeight = 140.0;
   static const _imageScale = 1.4;
 
   @override
@@ -85,7 +99,7 @@ class _MotivationalQuote extends StatelessWidget {
         Constant.spaceMedium,
         Constant.zero,
       ),
-      height: _cardHeight,
+      elevation: 1.0,
       child: Stack(
         children: [
           Padding(

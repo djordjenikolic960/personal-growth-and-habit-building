@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../common/constant/colors.dart';
 import '../../../common/constant/constant.dart';
-import '../../../common/extensions/theme_extensions.dart';
+import '../../extensions/theme_extensions.dart';
 
 class PageIndicator extends StatelessWidget {
   const PageIndicator({

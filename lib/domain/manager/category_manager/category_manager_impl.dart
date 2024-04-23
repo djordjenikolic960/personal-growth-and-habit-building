@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../model/categories.dart';
+import '../../entity/categories.dart';
 
-import '../../model/category.dart';
-import '../../model/task.dart';
+import '../../entity/category.dart';
+import '../../entity/task.dart';
 import 'category_manager.dart';
 
 class CategoryManagerImpl implements CategoryManager {

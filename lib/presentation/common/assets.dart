@@ -9,4 +9,6 @@ class DailyGrowAssets {
   static const onboardingContent4 = "${assetsPath}content4.png";
   static const motivationalContent =
       "${assetsPath}motivational_card_content.png";
+  static const book = "${assetsPath}book.svg";
+  static const splash = "${assetsPath}splash_screen.png";
 }

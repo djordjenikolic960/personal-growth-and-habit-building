@@ -8,6 +8,5 @@ class Constant {
   static const spaceLarge = 16.0;
   static const spaceExtraLarge = 24.0;
   static const spaceJumbo = 32.0;
-
-  static const cardDefaultHeight = 200.0;
+  static const standardElevation = 1.0;
 }
