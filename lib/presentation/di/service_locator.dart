@@ -6,6 +6,8 @@ import '../common/bottom_navigation/bloc/bottom_navigation_bloc.dart';
 import '../common/router/grow_daily_router.dart';
 import '../common/router/grow_daily_router_impl.dart';
 import '../common/widget/text_input_field/bloc/text_input_field_bloc.dart';
+import '../create_habit/bloc/create_habit_bloc.dart';
+import '../home/bloc/home_bloc.dart';
 import '../log_in/bloc/auth_bloc.dart';
 import '../onboarding/bloc/onboarding_bloc.dart';
 
@@ -54,6 +56,19 @@ void _registerBlocs() {
 
   serviceLocator.registerFactory<AppConfigBloc>(
     () => AppConfigBloc(
+      serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerFactory<CreateHabitBloc>(
+    () => CreateHabitBloc(
+      serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerFactory<HomeBloc>(
+    () => HomeBloc(
+      serviceLocator(),
       serviceLocator(),
     ),
   );

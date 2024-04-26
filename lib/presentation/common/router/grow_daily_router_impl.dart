@@ -1,5 +1,9 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../../../data/di/service_locator.dart';
 import '../../choose_category/choose_category_screen.dart';
+import '../../create_habit/bloc/create_habit_bloc.dart';
+import '../../create_habit/bloc/create_habit_event.dart';
 import '../../create_habit/create_habit_screen.dart';
 import '../../extensions/user_extension.dart';
 import '../../log_in/login_screen.dart';
@@ -34,13 +38,10 @@ class GrowDailyRouterImpl implements GrowDailyRouter {
 
           final user = context.getCurrentUser;
           if (user != null) {
-            // Don't redirect if user is already logged in
             return null;
           } else {
             return GrowDailyRoute.logIn.path;
           }
-
-          return null;
         },
         routes: [
           _splashRoute(),
@@ -123,6 +124,9 @@ class GrowDailyRouterImpl implements GrowDailyRouter {
   RouteBase _createHabitRoute() => GoRoute(
         name: GrowDailyRoute.createHabit.routerName,
         path: GrowDailyRoute.createHabit.path,
-        builder: (_, __) => const CreateHabitScreen(),
+        builder: (context, __) => BlocProvider<CreateHabitBloc>(
+            create: (_) =>
+                serviceLocator.get<CreateHabitBloc>()..add(UpdateHabit()),
+            child: const CreateHabitScreen()),
       );
 }

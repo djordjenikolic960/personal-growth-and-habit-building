@@ -14,6 +14,14 @@ import '../use_case/auth/sign_out_use_case.dart';
 import '../use_case/auth/sign_out_use_case_impl.dart';
 import '../use_case/auth/sign_up_with_email_and_password_use_case.dart';
 import '../use_case/auth/sign_up_with_email_and_password_use_case_impl.dart';
+import '../use_case/habit/get_all_habits_as_stream_use_case.dart';
+import '../use_case/habit/get_all_habits_as_stream_use_case_impl.dart';
+import '../use_case/habit/get_all_habits_use_case.dart';
+import '../use_case/habit/get_all_habits_use_case_impl.dart';
+import '../use_case/habit/insert_habit_use_case_impl.dart';
+import '../use_case/habit/insert_habit_user_case.dart';
+import '../use_case/habit/update_habit_use_case.dart';
+import '../use_case/habit/update_habit_use_case_impl.dart';
 import '../use_case/onboarding/complete_onboarding_use_case.dart';
 import '../use_case/onboarding/complete_onboarding_use_case_impl.dart';
 import '../use_case/onboarding/is_onboarding_completed_use_case.dart';
@@ -74,7 +82,31 @@ void _registerUseCases() {
   );
 
   serviceLocator.registerFactory<GetUserStreamUseCase>(
-        () => GetUserStreamUseCaseImpl(
+    () => GetUserStreamUseCaseImpl(
+      serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerFactory<InsertHabitUseCase>(
+    () => InsertHabitUseCaseImpl(
+      serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerFactory<GetAllHabitsUseCase>(
+    () => GetAllHabitsUseCaseImpl(
+      serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerFactory<GetAllHabitsAsStreamUseCase>(
+    () => GetAllHabitsAsStreamUseCaseImpl(
+      serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerFactory<UpdateHabitUseCase>(
+    () => UpdateHabitUseCaseImpl(
       serviceLocator(),
     ),
   );

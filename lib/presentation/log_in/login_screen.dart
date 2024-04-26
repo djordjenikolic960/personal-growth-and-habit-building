@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Stack(
         children: [
           Image.asset(
-            DailyGrowAssets.loginBackground,
+            GrowDailyAssets.loginBackground,
             fit: BoxFit.cover,
           ),
           BlocProvider<AuthBloc>(

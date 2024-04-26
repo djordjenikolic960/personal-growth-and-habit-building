@@ -1,4 +1,4 @@
-class DailyGrowAssets {
+class GrowDailyAssets {
   static const assetsPath = "assets/images/";
   static const loginBackground = "${assetsPath}login_background.png";
   static const background = "${assetsPath}background.png";
@@ -11,4 +11,5 @@ class DailyGrowAssets {
       "${assetsPath}motivational_card_content.png";
   static const book = "${assetsPath}book.svg";
   static const splash = "${assetsPath}splash_screen.png";
+  static const startHabit = "${assetsPath}start_habit.png";
 }

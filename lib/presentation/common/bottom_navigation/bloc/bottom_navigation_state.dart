@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../screen.dart';
 
-@immutable
 abstract interface class BottomNavigationState extends Equatable {}
 
 class BottomNavigationSelectedScreen extends BottomNavigationState {

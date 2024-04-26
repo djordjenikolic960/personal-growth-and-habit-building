@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 import 'data/di/service_locator.dart';
 import 'firebase_options.dart';
 import 'presentation/bloc/user_bloc/user_bloc.dart';
@@ -13,15 +15,23 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  await _initDependencies();
+  await _init();
   runApp(const MyApp());
 }
 
+Future<void> _init() async {
+  await _initFirebase();
+  await _initDependencies();
+}
+
+Future<void> _initFirebase() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+}
+
 Future<void> _initDependencies() async {
-  data_service_locator.init();
+  await data_service_locator.init();
   domain_service_locator.init();
   presentation_service_locator.init();
 }
