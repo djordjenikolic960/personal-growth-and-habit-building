@@ -55,7 +55,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       const SizedBox(
                         height: Constant.spaceJumbo,
                       ),
-                      Image.asset(DailyGrowAssets.signUpAvatar),
+                      Image.asset(GrowDailyAssets.signUpAvatar),
                       const SizedBox(
                         height: Constant.spaceJumbo,
                       ),

@@ -1,13 +1,21 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../../data/di/service_locator.dart';
+import '../../data/model/habit.dart';
 import '../bloc/user_bloc/user_bloc.dart';
 import '../bloc/user_bloc/user_event.dart';
 import '../bloc/user_bloc/user_state.dart';
 import '../common/router/grow_daily_route.dart';
+import '../common/widget/background_widget.dart';
+import '../common/widget/custom_list_view.dart';
+import '../extensions/date_time_extension.dart';
 import '../extensions/localization_extension.dart';
 import '../extensions/theme_extensions.dart';
-import 'widgets/diagonal_half_painter.dart';
+import 'bloc/home_bloc.dart';
+import 'bloc/home_event.dart';
+import 'bloc/home_state.dart';
 import '../../common/constant/colors.dart';
 import '../../common/constant/constant.dart';
 import '../common/assets.dart';
@@ -43,31 +51,51 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-        body: const SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+        body: BlocProvider<HomeBloc>(
+          create: (_) =>
+              serviceLocator.get<HomeBloc>()..add(InitializeHabitsStream()),
+          child: Stack(
             children: [
-              _MotivationalQuote(),
-              _HabitHeading(),
-              SizedBox(
-                height: Constant.spaceMedium,
+              BackgroundWidget(
+                child: SizedBox(
+                  width: MediaQuery.sizeOf(context).width,
+                  height: MediaQuery.sizeOf(context).height,
+                ),
               ),
-              _HabitRow("Read a book", DailyGrowColors.textColor),
-              SizedBox(
-                height: Constant.spaceMedium,
+              SingleChildScrollView(
+                child:
+                    BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const _MotivationalQuote(),
+                      _DatePicker((state is FetchHabitSuccess)
+                          ? state.selectedDate
+                          : DateTime.now()),
+                      const SizedBox(
+                        height: Constant.spaceLarge,
+                      ),
+                      state is FetchHabitSuccess && state.habit.isNotEmpty
+                          ? CustomListView(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              primary: false,
+                              physics: const NeverScrollableScrollPhysics(),
+                              title: Text(
+                                context.l10n.habits,
+                                style: context.textTheme.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              itemBuilder: (context, index) => HabitCard(
+                                  habit: state.habit[index],
+                                  selectedDate: state.selectedDate),
+                              itemCount: state.habit.length)
+                          : const SizedBox.shrink()
+                    ],
+                  );
+                }),
               ),
-              _HabitRow("Exercise", Colors.blue),
-              SizedBox(
-                height: Constant.spaceMedium,
-              ),
-              _HabitRow("Wake Up Early", Colors.red),
-              SizedBox(
-                height: Constant.spaceMedium,
-              ),
-              _HabitRow("Walk Dog", Colors.deepPurple),
-              SizedBox(
-                height: 400,
-              )
             ],
           ),
         ),
@@ -126,7 +154,7 @@ class _MotivationalQuote extends StatelessWidget {
             right: Constant.zero,
             child: Image.asset(
               scale: _imageScale,
-              DailyGrowAssets.motivationalContent,
+              GrowDailyAssets.motivationalContent,
             ),
           ),
         ],
@@ -135,8 +163,10 @@ class _MotivationalQuote extends StatelessWidget {
   }
 }
 
-class _HabitHeading extends StatelessWidget {
-  const _HabitHeading();
+class _DatePicker extends StatelessWidget {
+  final DateTime selectedDate;
+
+  const _DatePicker(this.selectedDate);
 
   static const _dateSize = 50.0;
 
@@ -144,52 +174,55 @@ class _HabitHeading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(left: Constant.spaceLarge),
-      height: _dateSize,
+      height: _dateSize + Constant.spaceLarge,
       child: Row(
         children: [
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: Constant.spaceLarge),
-            child: Text(
-              context.l10n.habits,
-              style: context.textTheme.titleMedium,
-            ),
-          ),
-          const SizedBox(
-            width: 60,
-          ),
           Expanded(
             child: ListView.builder(
               physics: const ClampingScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              itemCount: 7,
+              itemCount: Constant.numberOfDaysInAWeek,
               itemBuilder: (context, index) {
-                return Container(
-                  alignment: Alignment.center,
-                  width: _dateSize,
-                  height: _dateSize,
-                  margin: const EdgeInsets.symmetric(
-                      horizontal: Constant.spaceSmall),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(Constant.spaceMedium),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Mon",
-                        style: context.textTheme.bodySmall?.copyWith(
-                          color: DailyGrowColors.hintColor,
+                final DateTime today =
+                    DateTime.now().add(Duration(days: index));
+                final isSelected = today.isSameDate(selectedDate);
+                return InkWell(
+                  onTap: () {
+                    context.read<HomeBloc>().add(SelectDate(today));
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: _dateSize,
+                    height: _dateSize + Constant.spaceLarge,
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: Constant.spaceSmall),
+                    decoration: BoxDecoration(
+                      color:
+                          isSelected ? DailyGrowColors.textColor : Colors.white,
+                      borderRadius: BorderRadius.circular(Constant.spaceMedium),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          today.day.toString(),
+                          style: context.textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: DailyGrowColors.secondaryColor,
+                          ),
                         ),
-                      ),
-                      Text(
-                        "22",
-                        style: context.textTheme.titleMedium,
-                      ),
-                    ],
-                  ), // Placeholder content
+                        Text(
+                          today.toDayOfWeek,
+                          style: context.textTheme.bodySmall?.copyWith(
+                            color: isSelected
+                                ? DailyGrowColors.secondaryColor
+                                : DailyGrowColors.hintColor,
+                          ),
+                        ),
+                      ],
+                    ), // Placeholder content
+                  ),
                 );
               },
             ),
@@ -200,83 +233,74 @@ class _HabitHeading extends StatelessWidget {
   }
 }
 
-class _HabitRow extends StatelessWidget {
-  final String title;
-  final Color color;
+class HabitCard extends StatelessWidget {
+  final Habit habit;
+  final DateTime selectedDate;
 
-  const _HabitRow(
-    this.title,
-    this.color,
-  );
-
-  static const _dateSize = 75.0;
-  static const _verticalPadding = 10.0;
+  const HabitCard({
+    super.key,
+    required this.habit,
+    required this.selectedDate,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(left: Constant.spaceLarge),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(Constant.spaceMedium),
-      ),
-      height: _dateSize,
-      child: Row(
+    final isChecked = habit.logs.firstWhereOrNull(
+            (log) => log.date.toDate == selectedDate.toDate && log.completed) !=
+        null;
+    return BaseCard(
+      margin: const EdgeInsets.all(Constant.spaceLarge),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(
-            width: MediaQuery.sizeOf(context).width * 0.3,
-            child: Padding(
-              padding: const EdgeInsets.only(left: Constant.spaceLarge),
-              child: Text(
-                title,
-                overflow: TextOverflow.ellipsis,
-                style: context.textTheme.titleSmall,
-              ),
-            ),
-          ),
-          const SizedBox(
-            width: Constant.spaceLarge,
-          ),
-          Container(
-            width: 1,
-            height: double.infinity,
-            color: DailyGrowColors.backgroundColor,
-          ),
-          Expanded(
-            child: ListView.builder(
-              physics: const ClampingScrollPhysics(),
-              padding: const EdgeInsets.only(left: _verticalPadding),
-              scrollDirection: Axis.horizontal,
-              itemCount: 7,
-              itemBuilder: (context, index) {
-                return Container(
-                  alignment: Alignment.center,
-                  width: 52,
-                  height: 52,
-                  margin: const EdgeInsets.symmetric(
-                      horizontal: Constant.spaceSmall,
-                      vertical: _verticalPadding),
-                  decoration: BoxDecoration(
-                    color: color.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(Constant.spaceMedium),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black,
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: const Icon(
+                      Icons.account_circle_sharp,
+                      size: 24,
+                    ),
                   ),
-                  child: index % 2 == 0
-                      ? CustomPaint(
-                          size: const Size(48, 46),
-                          painter: DiagonalHalfPainter(color: color),
-                        )
-                      : Container(
-                          width: 46,
-                          height: 49,
-                          decoration: BoxDecoration(
-                            color: color,
-                            borderRadius:
-                                BorderRadius.circular(Constant.spaceMedium),
-                          ),
+                  const SizedBox(
+                    width: Constant.spaceMedium,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        habit.title,
+                        style: context.textTheme.titleMedium?.copyWith(
+                          fontSize: 18,
                         ),
-                );
-              },
-            ),
+                      ),
+                      Text(habit.title, style: context.textTheme.titleSmall),
+                    ],
+                  ),
+                ],
+              ),
+              const Spacer(),
+              Checkbox(
+                  value: isChecked,
+                  onChanged: (isCompleted) {
+                    context
+                        .read<HomeBloc>()
+                        .add(UpdateHabit(habit, isCompleted!));
+                  }),
+              // Custom widget to create the circular progress indicator
+            ],
           ),
         ],
       ),

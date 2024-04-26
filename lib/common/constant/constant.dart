@@ -9,4 +9,6 @@ class Constant {
   static const spaceExtraLarge = 24.0;
   static const spaceJumbo = 32.0;
   static const standardElevation = 1.0;
+
+  static const numberOfDaysInAWeek = 7;
 }

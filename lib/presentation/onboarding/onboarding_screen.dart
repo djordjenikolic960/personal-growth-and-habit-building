@@ -32,22 +32,22 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       OnboardingContent(
         title: context.l10n.onBoardingScreen1Title,
         body: context.l10n.onBoardingScreen1Body,
-        image: Image.asset(DailyGrowAssets.onboardingContent1),
+        image: Image.asset(GrowDailyAssets.onboardingContent1),
       ),
       OnboardingContent(
         title: context.l10n.onBoardingScreen2Title,
         body: context.l10n.onBoardingScreen2Body,
-        image: Image.asset(DailyGrowAssets.onboardingContent2),
+        image: Image.asset(GrowDailyAssets.onboardingContent2),
       ),
       OnboardingContent(
         title: context.l10n.onBoardingScreen3Title,
         body: context.l10n.onBoardingScreen3Body,
-        image: Image.asset(DailyGrowAssets.onboardingContent3),
+        image: Image.asset(GrowDailyAssets.onboardingContent3),
       ),
       OnboardingContent(
         title: context.l10n.onBoardingScreen4Title,
         body: context.l10n.onBoardingScreen4Body,
-        image: Image.asset(DailyGrowAssets.onboardingContent4),
+        image: Image.asset(GrowDailyAssets.onboardingContent4),
       ),
     ];
 

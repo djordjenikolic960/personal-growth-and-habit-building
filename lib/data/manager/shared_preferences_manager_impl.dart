@@ -9,30 +9,6 @@ class SharedPreferencesManagerImpl implements SharedPreferencesManager {
     return _sharedPreferences!;
   }
 
-  /* @override
-  Future<void> saveString(String key, String value) async {
-    final prefsInstance = await sharedPreferences;
-    await prefsInstance.setString(key, value);
-  }
-
-  @override
-  Future<String?> getString(String key) async {
-    final prefsInstance = await sharedPreferences;
-    return prefsInstance.getString(key);
-  }
-
-  @override
-  Future<bool> getBool(String key) async {
-    final prefsInstance = await sharedPreferences;
-    return prefsInstance.getBool(key) ?? false;
-  }
-
-  @override
-  Future<void> saveBool(String key, bool value) async {
-    final prefsInstance = await sharedPreferences;
-    await prefsInstance.setBool(key, value);
-  }
-*/
   @override
   Future<void> save<T>(String key, T value) async {
     final prefs = await sharedPreferences;
